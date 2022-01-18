@@ -23,8 +23,6 @@ for file in files:
             for segment in track.segments:
                 time = time.replace(tzinfo=timezone.utc)
                 for point in segment.points:
-                    # print(f'Point at ({point.latitude},{point.longitude}) -> {point.elevation}')
-                    # print(time.isoformat())
                     time = time + timedelta(seconds=10)
                     point.time = time
                     print(point)
