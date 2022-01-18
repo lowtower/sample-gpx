@@ -1,6 +1,5 @@
 """Modify existing gpx tracks"""
-
-from datetime import timedelta, timezone
+from datetime import datetime, timedelta, timezone
 
 import gpxpy
 
@@ -31,7 +30,9 @@ files = [
 for file_name in files:
     with open(file_name, 'r', encoding='utf-8') as gpx_file:
         gpx = gpxpy.parse(gpx_file)
-        time = gpx.time.replace(tzinfo=timezone.utc)
+        time = datetime.now()
+        if gpx.time:
+            time = gpx.time.replace(tzinfo=timezone.utc)
         gpx.time = time
         for track in gpx.tracks:
             for segment in track.segments:
