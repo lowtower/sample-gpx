@@ -18,13 +18,12 @@ for file in files:
     file_name = os.path.join("RoscoffCoastal", file)
     with open(file_name, 'r', encoding='utf-8') as gpx_file:
         gpx = gpxpy.parse(gpx_file)
-        time = gpx.time
+        time = gpx.time.replace(tzinfo=timezone.utc)
+        gpx.time = time
         for track in gpx.tracks:
             for segment in track.segments:
-                time = time.replace(tzinfo=timezone.utc)
                 for point in segment.points:
-                    time = time + timedelta(seconds=10)
                     point.time = time
-                    print(point)
+                    time = time + timedelta(seconds=10)
         with open(file_name, "w", encoding='utf-8') as f:
             f.write(gpx.to_xml())
